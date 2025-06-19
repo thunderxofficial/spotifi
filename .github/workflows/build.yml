@@ -1,4 +1,4 @@
-name: Build Spotifi
+name: Build & Release Spotifi
 
 on:
   push:
@@ -7,9 +7,9 @@ on:
 
 jobs:
   build:
-    name: Build EXE with PyInstaller
+    name: Build EXE on Windows
     runs-on: windows-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -17,19 +17,17 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11' # or whatever version you need
+          python-version: '3.11' # or whatever version you use
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pyinstaller
-          # add other deps here if your .pyw needs any (like pip install -r requirements.txt)
+          pip install customtkinter
 
       - name: Build Spotifi.exe with PyInstaller
-        uses: JackMcKew/pyinstaller-action-windows@v0.1.2
-        with:
-          spec: ''
-          pyinstaller_args: '--clean --icon "NONE" --noconsole --onefile Spotifi.pyw'
+        run: |
+          pyinstaller --clean --icon "NONE" --noconsole --onefile Spotifi.pyw
 
       - name: Move EXE to output folder
         run: |
@@ -50,9 +48,8 @@ jobs:
           tag_name: ${{ steps.tag_version.outputs.new_tag }}
           name: Spotifi v${{ steps.tag_version.outputs.new_tag }}
           body: |
-            Auto-generated release.  
-            Changes in this version:
-            - Describe what changed here manually when pushing the commit.
+            Auto-generated release.
+            (Put changelog info here.)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
