@@ -1,5 +1,4 @@
 import os
-import webbrowser
 import customtkinter as ctk
 
 HOSTS_PATH = r"C:\Windows\System32\drivers\etc\hosts" if os.name == 'nt' else "/etc/hosts"
