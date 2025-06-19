@@ -26,7 +26,7 @@ jobs:
           # add other deps here if your .pyw needs any (like pip install -r requirements.txt)
 
       - name: Build Spotifi.exe with PyInstaller
-        uses: JackMcKew/pyinstaller-action-windows@v1
+        uses: JackMcKew/pyinstaller-action-windows@v0.1.2
         with:
           spec: ''
           pyinstaller_args: '--clean --icon "NONE" --noconsole --onefile Spotifi.pyw'
